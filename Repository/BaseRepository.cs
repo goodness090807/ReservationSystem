@@ -13,7 +13,8 @@ namespace ReservationSystem.Repository
         private readonly string _ConnectionString;
         public BaseRepository(IConfiguration config)
         {
-            _ConnectionString = config.GetConnectionString("DefaultConnection");
+            _ConnectionString = config.GetValue<string>("DefaultConnection");
+            //_ConnectionString = config.GetConnectionString("DefaultConnection");
         }
 
         public int Execute(string sql, object param = null)
