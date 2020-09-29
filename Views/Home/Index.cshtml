@@ -1,0 +1,69 @@
+﻿@model ReservationSystem.ViewModels.ReservationViewModel;
+@{
+    ViewData["Title"] = "修車保養預約系統";
+}
+
+<div class="text-center">
+    @Html.AntiForgeryToken()
+    <h1>清興車行</h1>
+    <h4 class="text-muted">修車保養預約系統</h4>
+
+    <div class="pt-5">
+        <form asp-action="NotLogin" method="post" id="NotLogin" class="hideform">
+            <h3>請登入後才能預約!!!</h3>
+        </form>
+
+
+        <form asp-action="Reservation" method="post" id="Reservation" class="hideform">
+            <input type="hidden" asp-for="TokenId" />
+            <div class="form-group p-2">
+                <input class="form-control" type="text" placeholder="請填寫真實姓名" asp-for="UserName" />
+                <span asp-validation-for="UserName" class="form-text text-danger"></span>
+            </div>
+            <div class="form-group p-2">
+                <select class="form-control" asp-for="Service" asp-items="Model.Services">
+                    <option value="">--請選擇服務項目--</option>
+                </select>
+                <span asp-validation-for="Service" class="form-text text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="text-secondary font-weight-bold">請選擇您的到店時間</label>
+                <input class="form-control" type="datetime-local" asp-for="ToStoreDateTime" />
+                <span asp-validation-for="ToStoreDateTime" class="form-text text-danger"></span>
+            </div>
+            <input class="btn btn-outline-info" type="submit" value="預約服務" onclick="return confirm('確定預約?')" />
+        </form>
+
+
+
+        <form asp-action="Canel" method="post" id="Canel" class="hideform">
+            <input type="hidden" id="CanelTokenId" name="CanelTokenId" />
+            <h3>您已預約成功!!!</h3>
+            <h4>以下是您的預約資訊</h4>
+            <div class="form-group">
+                <div class="input-group flex-nowrap pt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="addon-wrapping">預約人員</span>
+                    </div>
+                    <input class="form-control bg-white" type="text" name="BookingName" id="BookingName" readonly="readonly" />
+                </div>
+                <div class="input-group flex-nowrap pt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="addon-wrapping">預約服務</span>
+                    </div>
+                    <input class="form-control bg-white" type="text" name="BookingService" id="BookingService" readonly="readonly" />
+                </div>
+                <div class="input-group flex-nowrap pt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="addon-wrapping">到店時間</span>
+                    </div>
+                    <input class="form-control bg-white" type="text" name="BookingToStoreDateTime" id="BookingToStoreDateTime" readonly="readonly" />
+                </div>
+            </div>
+            <input class="btn btn-outline-info" type="submit" value="取消預約" onclick="return confirm('確定取消預約?')" />
+        </form>
+    </div>
+</div>
+
+
+<script src="~/js/LineLiff.js" asp-append-version="true"></script>
